@@ -28,7 +28,7 @@ abstract class Callback
 	 * Callback de paiement depuis les données POST
 	 * @return \HelloAsso\Callback\Payment
 	 */
-	public function getPayment()
+	public static function createPayment()
 	{
 	    return new Payment();
 	}
@@ -37,7 +37,7 @@ abstract class Callback
 	 * Callback de campagne depuis les données POST
 	 * @return \HelloAsso\Callback\Payment
 	 */
-	public function getCampaign()
+	public static function createCampaign()
 	{
 	    return new Campaign();
 	}

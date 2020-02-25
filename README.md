@@ -131,6 +131,7 @@ Il s'agit de l'objet Api\Response
 
 Les méthodes 
 
+- `setResourceClass(string) : Api\Response` : Permet de définir la classe qui sera utilisée par défaut par `getResource()`. Cette fonction est utilisée par la classe `Query` lorsque c'est une classe qui est passée au constructeur. Permet d'éviter la répétion et les erreurs en permettant de chaîner `Query::create(RessouceClass::class)->[...]->execute()->throwException()->getResource()`
 - `getHttpCode() : int` : Retourne le code HTTP
 - `getData() : stdClass` : Retourne les données JSON décodées
 - `getPagination() : Api\Pagination` : Retourne la pagination renvoyée par l'API
@@ -211,6 +212,11 @@ $code       = $response->getHttpCode();
 $pagination = $response->getPagination();
 $paiements  = $response->getResource(Payment::class);
 
+/*
+ * Note : Puisqu'on a initialisé Query::create() avec le nom de la classe ("Payment::class"),
+ * on peut aussi utiliser ici directement $response->getResource() sans paramètre 
+ */
+ 
 echo "Code HTTP resultat : $code" . PHP_EOL;
 echo "Pagination : Page {$pagination->page} / {$pagination->$max_page} ({$pagination->result_per_page} résultats par page)" . PHP_EOL;
 

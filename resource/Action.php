@@ -43,6 +43,7 @@ class Action extends Resource
 	/** @var string      */ public $country;
 	/** @var string      */ public $email;
 	/** @var string      */ public $status;
+	/** @var string      */ public $citizenship;
 	/** @var string      */ public $option_label;
 	/** @var \stdClass[] */ public $custom_infos;
 	
@@ -86,10 +87,19 @@ class Action extends Resource
 	 */
 	public function getPayment()
 	{
-		if (empty($this->payment))
+		if (empty($this->payment) && $this->id_payment)
 		{
 			$this->payment = Payment::get($this->id_payment);
 		}
 		return $this->payment;
+	}
+	
+	/**
+	 * Est-ce que cette action est liée à un paiement ?
+	 * @return boolean
+	 */
+	public function hasPayment()
+	{
+		return !empty($this->id_payment);
 	}
 }

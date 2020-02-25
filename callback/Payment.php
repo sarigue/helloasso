@@ -29,6 +29,9 @@ class Payment extends Callback
 	/** @var string    */ public $url_tax_receipt;
 	/** @var string    */ public $action_id;
 	/** @var string    */ public $status;
+	/** @var string    */ public $mean;
+	/** @var string    */ public $id_api_partner;
+	/** @var string    */ public $url_called;
 	
 	/** @var \HelloAsso\Resource\Action  */ protected $action;
 	/** @var \HelloAsso\Resource\Payment */ protected $payment;

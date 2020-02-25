@@ -12,7 +12,8 @@ require_once __DIR__.'/Exception.php';
  */
 class Response
 {
-    /** @var boolean    */ protected $is_collection;
+	/** @var string     */ protected $class;
+	/** @var boolean    */ protected $is_collection;
     /** @var mixed      */ protected $data;
     /** @var integer    */ protected $code;
     /** @var Pagination */ protected $pagination;
@@ -46,6 +47,16 @@ class Response
         {
             $this->pagination = new Pagination($json->pagination);
         }
+    }
+    
+    /**
+     * @param string $classname
+     * @return \HelloAsso\Api\Response
+     */
+    public function setResourceClass($classname)
+    {
+    	$this->class = $classname;
+    	return $this;
     }
     
     /**
@@ -115,9 +126,19 @@ class Response
      * @param string $class
      * @return \HelloAsso\Resource[]|\HelloAsso\Resource
      */
-    public function getResource($class)
+    public function getResource($class = NULL)
     {
-        if ($this->is_collection)
+    	if (empty($class) && empty($this->class))
+    	{
+    		throw new \Exception('Aucune classe définie pour '.__METHOD__);
+    	}
+    	
+    	if (empty($class))
+    	{
+    		$class = $this->class;
+    	}
+    	
+    	if ($this->is_collection)
         {
             $collection = [];
             foreach($this->data as $data)

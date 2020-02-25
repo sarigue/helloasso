@@ -10,11 +10,26 @@ namespace HelloAsso\Api;
 class Exception extends \Exception
 {
     /** @var string */ protected $api_code;
-    
+	/** @var string */ protected $api_className;
+	
     public function __construct($json, \Exception $previous = NULL)
     {
-        parent::__construct($json->message, 500, $previous);
-        $this->api_code = $json->code;
+    	$message = NULL;
+    	if (!empty($json) && property_exists($json, 'message'))
+    	{
+    		$message = $json->message;
+    	}
+    	if (empty($message) && !empty($json) && property_exists($json, 'Message'))
+    	{
+    		$message = $json->Message;
+    	}
+    	if (empty($message))
+    	{
+    		$message = 'Unknown error';
+    	}
+    	$this->api_code      = !empty($json) && property_exists($json, 'code') ? $json->code : NULL;
+    	$this->api_className = !empty($json) && property_exists($json, 'ClassName') ? $json->ClassName : NULL;
+    	parent::__construct($message, 500, $previous);
     }
     
     /**
@@ -34,7 +49,11 @@ class Exception extends \Exception
      */
     public static function isError($json)
     {
-        return property_exists($json, 'code') && property_exists($json, 'message');
+    	if (empty($json))
+    	{
+    		return TRUE;
+    	}
+        return property_exists($json, 'code') || property_exists($json, 'ClassName');
     }
     
     /**

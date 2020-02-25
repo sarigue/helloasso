@@ -21,6 +21,10 @@ trait ModelGetter
     public static function get($id)
     {
         return Query::create(static::RESOURCE_NAME, $id)
+        ->setOrganismId(NULL)    // On a un ID : donc pas de précision Organisme / Campagne
+        ->setOrganismSlug(NULL)  // On a un ID : donc pas de précision Organisme / Campagne
+        ->setCampaignId(NULL)    // On a un ID : donc pas de précision Organisme / Campagne
+        ->setPrivate()
         ->execute()
         ->throwException()
         ->getResource(static::class);
@@ -32,7 +36,7 @@ trait ModelGetter
      */
     public static function getAll(&$pagination = NULL)
     {
-        $result = Query::create(static::RESOURCE_NAME)->execute()->throwException();
+        $result = Query::create(static::RESOURCE_NAME)->setPrivate()->execute()->throwException();
         $pagination = $result->getPagination();
         return $result->getResource(static::class);
     }

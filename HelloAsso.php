@@ -34,6 +34,26 @@ class HelloAsso
 	}
 	
 	/**
+	 * Organisme par défaut pour la recherche des ressources
+	 * @param string $id
+	 * @param string $slug
+	 */
+	public static function setDefaultOrganism($id, $slug = NULL)
+	{
+		Query::setDefaultOrganismId($id);
+		Query::setDefaultOrganismSlug($slug);
+	}
+	
+	/**
+	 * Campagne par défaut pour la recherche des ressources
+	 * @param string $id
+	 */
+	public static function setDefaultCampaign($id)
+	{
+		Query::setDefaultCampaingId($id);
+	}
+	
+	/**
 	 * Mode test : autorise de réécrire une propriété protégée
 	 * pour lui forcer une valeur
 	 * @param string $test_mode

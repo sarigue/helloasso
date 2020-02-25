@@ -48,6 +48,7 @@ class Query
 	protected $results_per_page = NULL;
 	protected $query            = [];
 	protected $resource         = NULL;
+	protected $class            = NULL;
 	protected $id               = NULL;
 	protected $organism_slug    = FALSE;
 	protected $organism_id      = NULL;
@@ -111,12 +112,13 @@ class Query
 	public function __construct($resource_name, $id = NULL)
 	{
 	    // Si la ressource données est en fait une classe de ressource
-	    if (strpos($resource_name, 'HelloAsso/Resource/') !== FALSE && class_exists($resource_name, false))
+	    if (strpos($resource_name, 'HelloAsso\\Resource\\') !== FALSE && class_exists($resource_name, false))
 	    {
 	        $class = $resource_name;
 	        if (defined($class.'::RESOURCE_NAME'))
 	        {
 	            $resource_name = $class::RESOURCE_NAME;
+	            $this->class   = $class;
 	        }
 	        else
 	        {
@@ -237,7 +239,7 @@ class Query
 		{
 			$value = 1;
 		}
-		$this->query[$name] = urlencode($value);
+		$this->query[$name] = $value;
 		return $this;
 	}
 	
@@ -317,7 +319,6 @@ class Query
 		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
 		curl_close($curl);
-		
-		return new Response($json, $http_code);		
+		return (new Response($json, $http_code))->setResourceClass($this->class);
 	}
 }
