@@ -21,11 +21,10 @@ Copier simplement le dossier contenant le code HelloAsso sur votre disque (ou cl
 
 Inclure HelloAsso.php puis configurer l'API avec la clé.
 
-
 ```php
 require_once <path>.'/HelloAsso.php';
 
-\HelloAsso::apiConfig("id-api-helloasso", "password-api-helloasso");
+HelloAsso\HelloAsso::apiConfig("id-api-helloasso", "password-api-helloasso");
 ```
 
 ### Utilisation partielle
@@ -150,17 +149,17 @@ ou encore Api\Action::$organism, Api\Action::$payment, Api\Action::$campaign
 
 Cela permet de les redéfinir à la volée pour pousser des données de test.
 
-Le mode test peut se définir pour l'ensemble de HelloAsso 
+Le mode test peut se définir pour l'ensemble de HelloAsso
 
 ```php
-\HelloAsso::setTestMode(boolean)
+HelloAsso\HelloAsso::setTestMode(boolean)
 ```
 
 Il peut aussi se définir indépendamment pour le callback et les resources
 
 ```php
-\HelloAsso\Callback::setTestMode(boolean);
-\HelloAsso\Resource::setTestMode(boolean);
+HelloAsso\Callback::setTestMode(boolean);
+\HelloAsso\V3\Resource::setTestMode(boolean);
 ```
 
 ## Exemple
@@ -173,10 +172,10 @@ Exemple de réaction à la notification d'un paiement
 
 require_once 'helloasso/HelloAsso.php';
 
-\HelloAsso::config("id-api", "password-api");
-\HelloAsso::setTestMode(false);
+HelloAsso\HelloAsso::config("id-api", "password-api");
+HelloAsso\HelloAsso::setTestMode(false);
 
-$notification = \HelloAsso\Callback::getPayment();
+$notification = HelloAsso\Callback::getPayment();
 $organism  = $notification->getAction()->getOrganism()->name;
 $campaign  = $notification->getAction()->getCampaign()->name;
 $amount    = $notification->getPayment()->amount;
