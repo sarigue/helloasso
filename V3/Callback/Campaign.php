@@ -2,8 +2,10 @@
 
 namespace HelloAsso\V3\Callback;
 
-use HelloAsso\Callback;
-use HelloAsso\V3\Resource;
+use DateTime;
+use Exception;
+use HelloAsso\V3\Callback;
+use HelloAsso\V3\Resource\Campaign as ResourceCampaign;
 
 /**
  * Notification concernant une campagne
@@ -24,14 +26,17 @@ class Campaign extends Callback
 	
 	
 	/** @var string    */ public $id;
-	/** @var \DateTime */ public $date;
+	/** @var DateTime */ public $date;
 	/** @var string    */ public $url;
 	/** @var string    */ public $notification_type;
 	/** @var string    */ public $type;
 	
-	/** @var \HelloAsso\Resource\Campaign */ protected $campaign;
-	
-	public function __construct()
+	/** @var ResourceCampaign */ protected $campaign;
+
+    /**
+     * @throws Exception
+     */
+    public function __construct()
 	{
 		parent::__construct();
 				
@@ -42,17 +47,18 @@ class Campaign extends Callback
 		$date = $this->getParam('date');
 		if (!empty($date))
 		{
-			$this->date = new \DateTime($date);
+			$this->date = new DateTime($date);
 		}
 	}
-	
-	/**
-	 * Récupère les informations sur la campagne
-	 * @return \HelloAsso\Resource\Campaign
-	 */
+
+    /**
+     * Récupère les informations sur la campagne
+     * @return ResourceCampaign
+     * @throws Exception
+     */
 	public function getCampaign()
 	{
-		return resource\Campaign::get($this->id);
+		return ResourceCampaign::get($this->id);
 	}
 	
 }

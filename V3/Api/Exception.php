@@ -1,6 +1,8 @@
 <?php
 namespace HelloAsso\V3\Api;
 
+use stdClass;
+
 /**
  * Exception de l'API
  * 
@@ -42,7 +44,7 @@ class Exception extends \Exception
     }
     
     /**
-     * @param \stdClass $json
+     * @param stdClass $json
      *          réponse json décodée sous forme d'objet
      * @return boolean
      *          true si la réponse est une erreur
@@ -58,7 +60,7 @@ class Exception extends \Exception
     
     /**
      * Lancer l'erreur si la réponse est une erreur
-     * @param \stdClass $json
+     * @param stdClass $json
      *          réponse json décodée sous forme d'objet
      * @throws self
      */

@@ -3,6 +3,7 @@
 namespace HelloAsso\V5;
 
 
+use Exception;
 use HelloAsso\V5\Resource\Form;
 use HelloAsso\V5\Resource\Order;
 use HelloAsso\V5\Resource\Payment;
@@ -26,7 +27,7 @@ class Callback
 
 
     /**
-     * @return static
+     * @return Callback
      */
     public static function init()
     {
@@ -78,6 +79,9 @@ class Callback
         return $this->is(static::EVENT_TYPE_FORM);
     }
 
+    /**
+     * @throws Exception
+     */
     public function getOrder()
     {
         $data = json_decode($this->data);
@@ -88,6 +92,9 @@ class Callback
         return $this->isOrder() ? new Order($data) : null;
     }
 
+    /**
+     * @throws Exception
+     */
     public function getPayment()
     {
         $data = json_decode($this->data);
@@ -98,6 +105,9 @@ class Callback
         return $this->isPayment() ? new Payment($data) : null;
     }
 
+    /**
+     * @throws Exception
+     */
     public function getForm()
     {
         $data = json_decode($this->data);

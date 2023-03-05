@@ -1,7 +1,9 @@
 <?php
 namespace HelloAsso\V5\Traits;
 
+use Exception;
 use HelloAsso\V5\Api\Pagination;
+use HelloAsso\V5\Api\ResponseError;
 use HelloAsso\V5\ResourceQuery;
 
 /**
@@ -23,10 +25,13 @@ trait Queryable
     /**
      * @param Pagination $pagination
      * @return static[]
-     * @throws \HelloAsso\V5\Api\ResponseError
+     * @throws ResponseError
+     * @throws Exception
+     * @noinspection PhpReturnDocTypeMismatchInspection
      */
     public static function getAll(Pagination &$pagination)
     {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return ResourceQuery::createFromResource(static::class)
             ->search()
             ->setResourceClass(static::class)
@@ -38,16 +43,22 @@ trait Queryable
     /**
      * @param $id
      * @return static
-     * @throws \HelloAsso\V5\Api\ResponseError
+     * @throws ResponseError
+     * @throws Exception
+     * @noinspection PhpReturnDocTypeMismatchInspection
      */
     public static function get($id)
     {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return static::getResponse($id)
             ->setResourceClass(static::class)
             ->getResource()
             ;
     }
 
+    /**
+     * @throws ResponseError
+     */
     protected static function getResponse($id)
     {
         return ResourceQuery::createFromResource(static::class)

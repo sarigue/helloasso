@@ -54,6 +54,7 @@ class Request
      * In-line constructor
      * @param Authentication $authentication
      * @return static
+     * @throws ResponseError
      */
     public static function create(Authentication $authentication = null)
     {

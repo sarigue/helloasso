@@ -3,9 +3,13 @@
 namespace HelloAsso\V5\Resource;
 
 
+use DateTime;
+use Exception;
 use HelloAsso\V5\Api\Response;
+use HelloAsso\V5\Api\ResponseError;
 use HelloAsso\V5\Resource;
 use HelloAsso\V5\Resource\Data\Payer;
+use HelloAsso\V5\Resource\Query\PaymentRefund;
 use HelloAsso\V5\Traits\Queryable;
 use HelloAsso\V5\Traits\Response\Meta;
 
@@ -44,13 +48,13 @@ class Payment extends Resource
 
 
     /** @var string    */ public $id;
-    /** @var \DateTime */ public $cashOutDate;
+    /** @var DateTime */ public $cashOutDate;
     /** @var string    */ public $cashOutState;
     /** @var string    */ public $paymentReceiptUrl;
     /** @var string    */ public $fiscalReceiptUrl;
     /** @var float     */ public $amount;
     /** @var float     */ public $amountTip;
-	/** @var \DateTime */ public $date;
+	/** @var DateTime */ public $date;
     /** @var string    */ public $paymentMeans;
     /** @var int       */ public $installmentNumber;
     /** @var string    */ public $paymentOffLineMean;
@@ -61,18 +65,25 @@ class Payment extends Resource
     /** @var Payer    */ public  $payer;
     /** @var Item[]   */ public  $items = [];
 
-	public function __construct($json)
+    /**
+     * @throws Exception
+     */
+    public function __construct($json)
 	{
         parent::__construct($json);
         $this->installmentNumber = (int)$this->installmentNumber;
         $this->amount = $this->amount / 100;
         $this->amountTip = $this->amountTip / 100;
-        $this->cashOutDate = new \DateTime($this->cashOutDate);
+        $this->cashOutDate = new DateTime($this->cashOutDate);
         $this->convert($this->order, Order::class);
         $this->convert($this->payer, Payer::class);
         $this->convert($this->items, Item::class);
 	}
 
+    /**
+     * @throws ResponseError
+     * @throws Exception
+     */
     public static function getAllFromForm($formType, $formSlug)
     {
         return Query\Payment::create()
@@ -82,6 +93,10 @@ class Payment extends Resource
             ;
     }
 
+    /**
+     * @throws ResponseError
+     * @throws Exception
+     */
     public static function getAllFromOrganization()
     {
         return Query\Payment::create()
@@ -92,7 +107,8 @@ class Payment extends Resource
     }
 
     /**
-     * @return \HelloAsso\V5\Resource\Query\PaymentRefund
+     * @return PaymentRefund
+     * @throws ResponseError
      */
     public function refunder()
     {
@@ -101,10 +117,11 @@ class Payment extends Resource
 
     /**
      * @param string $comment
-     * @param bool   $refundOrder
-     * @param bool   $sendmail
+     * @param bool $refundOrder
+     * @param bool $sendmail
      * @param string $authorization
      * @return Response
+     * @throws ResponseError
      */
     public function refund(
         $comment = null,
@@ -123,6 +140,7 @@ class Payment extends Resource
 
     /**
      * @return $this
+     * @throws Exception
      */
     public function refresh()
     {

@@ -2,6 +2,7 @@
 
 namespace HelloAsso\V5\Api;
 
+use Exception;
 use HelloAsso\V5\Api\Token\AccessToken;
 use HelloAsso\V5\Api\Token\RefreshToken;
 
@@ -208,6 +209,7 @@ class Authentication
      * @param array $data
      * @return array
      * @throws ResponseError
+     * @throws Exception
      */
     protected function exec(array $data)
     {
@@ -231,7 +233,7 @@ class Authentication
         curl_close($curl);
         if ($http_code !== 200)
         {
-            $e = new \Exception(
+            $e = new Exception(
                 'Unable to authenticate or refresh',
                 $http_code
             );

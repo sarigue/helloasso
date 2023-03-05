@@ -2,7 +2,10 @@
 
 namespace HelloAsso\V3\Callback;
 
-use HelloAsso\Callback;
+use DateTime;
+use Exception;
+use HelloAsso\V3\Callback;
+use HelloAsso\V3\Resource\Action;
 use HelloAsso\V3\Resource;
 
 /**
@@ -16,7 +19,7 @@ class Payment extends Callback
 	const STATUS_AUTHORIZED = 'AUTHORIZED';
 	
 	/** @var string    */ public $id;
-	/** @var \DateTime */ public $date;
+	/** @var DateTime */ public $date;
 	/** @var string    */ public $amount;
 	/** @var string    */ public $type;
 	/** @var string    */ public $url;
@@ -30,10 +33,13 @@ class Payment extends Callback
 	/** @var string    */ public $id_api_partner;
 	/** @var string    */ public $url_called;
 	
-	/** @var \HelloAsso\Resource\Action  */ protected $action;
-	/** @var \HelloAsso\Resource\Payment */ protected $payment;
-	
-	public function __construct()
+	/** @var Action  */ protected $action;
+	/** @var Resource\Payment */ protected $payment;
+
+    /**
+     * @throws Exception
+     */
+    public function __construct()
 	{
 		parent::__construct();
 				
@@ -50,14 +56,15 @@ class Payment extends Callback
 		$date = $this->getParam('date');
 		if (!empty($date))
 		{
-			$this->date = new \DateTime($date);
+			$this->date = new DateTime($date);
 		}
 	}
-	
-	/**
-	 *
-	 * @return \HelloAsso\Resource\Action
-	 */
+
+    /**
+     *
+     * @return Action
+     * @throws Exception
+     */
 	public function getAction()
 	{
 		if (empty($this->action) && isset($this->action_id))
@@ -66,16 +73,17 @@ class Payment extends Callback
 		}
 		return $this->action;
 	}
-	
-	/**
-	 *
-	 * @return \HelloAsso\Resource\Payment
-	 */
+
+    /**
+     *
+     * @return Resource\Payment
+     * @throws Exception
+     */
 	public function getPayment()
 	{
 		if (empty($this->payment))
 		{
-		    $this->payment = resource\Payment::get($this->id);
+		    $this->payment = Resource\Payment::get($this->id);
 		}
 		return $this->payment;
 	}

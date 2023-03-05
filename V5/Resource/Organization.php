@@ -3,6 +3,8 @@
 namespace HelloAsso\V5\Resource;
 
 
+use Exception;
+use HelloAsso\V5\Api\ResponseError;
 use HelloAsso\V5\Resource;
 use HelloAsso\V5\Traits\Queryable;
 use HelloAsso\V5\Traits\Response\Meta;
@@ -143,8 +145,10 @@ class Organization extends Resource
     }
 
     /**
-     * @see Queryable::refresh()
      * @return $this
+     * @throws ResponseError
+     * @throws Exception
+     * @see Queryable::refresh()
      */
     public function refresh()
     {

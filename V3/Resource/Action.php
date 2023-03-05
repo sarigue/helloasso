@@ -2,8 +2,11 @@
 
 namespace HelloAsso\V3\Resource;
 
+use DateTime;
+use Exception;
 use HelloAsso\V3\Traits\ModelGetter;
 use HelloAsso\V3\Resource;
+use stdClass;
 
 /**
  * Action HelloAsso
@@ -29,7 +32,7 @@ class Action extends Resource
 	/** @var string      */ public $id_campaign;
 	/** @var string      */ public $id_organism;
 	/** @var string      */ public $id_payment;
-	/** @var \DateTime   */ public $date;
+	/** @var DateTime   */ public $date;
 	/** @var float       */ public $amount;
 	/** @var string      */ public $type;
 	/** @var string      */ public $first_name;
@@ -42,12 +45,12 @@ class Action extends Resource
 	/** @var string      */ public $status;
 	/** @var string      */ public $citizenship;
 	/** @var string      */ public $option_label;
-	/** @var \stdClass[] */ public $custom_infos;
+	/** @var stdClass[] */ public $custom_infos;
 	
 	
-	/** @var \HelloAsso\Resource\Campaign  */ protected $campaign;
-	/** @var \HelloAsso\Resource\Organism  */ protected $organism;
-	/** @var \HelloAsso\Resource\Payment   */ protected $payment;
+	/** @var Campaign */ protected $campaign;
+	/** @var Organism */ protected $organism;
+	/** @var Payment */ protected $payment;
 	
 	
 	public function __construct($json)
@@ -55,9 +58,10 @@ class Action extends Resource
 		parent::__construct($json);
 	}
 
-	/**
-	 * @return \HelloAsso\Resource\Campaign
-	 */
+    /**
+     * @return Campaign
+     * @throws Exception
+     */
 	public function getCampaign()
 	{
 		if (empty($this->campaign))
@@ -67,9 +71,10 @@ class Action extends Resource
 		return $this->campaign;
 	}
 
-	/**
-	 * @return \HelloAsso\Resource\Organism
-	 */
+    /**
+     * @return Organism
+     * @throws Exception
+     */
 	public function getOrganism()
 	{
 		if (empty($this->organism))
@@ -79,9 +84,10 @@ class Action extends Resource
 		return $this->organism;
 	}
 
-	/**
-	 * @return \HelloAsso\Resource\Payment
-	 */
+    /**
+     * @return Payment
+     * @throws Exception
+     */
 	public function getPayment()
 	{
 		if (empty($this->payment) && $this->id_payment)

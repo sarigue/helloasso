@@ -2,7 +2,8 @@
 
 namespace HelloAsso\V5\Resource\Data;
 
-use HelloAsso\V5\Resource\Exception;
+use DateTime;
+use Exception;
 
 abstract class CustomData
 {
@@ -36,6 +37,7 @@ abstract class CustomData
 
     /**
      * @param CustomField[] $data
+     * @throws Exception
      */
     public function __construct(array $data)
     {
@@ -55,7 +57,7 @@ abstract class CustomData
             {
                 $this->$field = $this->parse($value, $definition);
             }
-            catch (\Exception $e)
+            catch (Exception $e)
             {
                 $this->$field = null;
                 if (!static::$errorHandler)
@@ -93,9 +95,10 @@ abstract class CustomData
 
     /**
      * Transforme en type attendu
-     * @param string $value
+     * @param mixed $value
      * @param array $definition
-     * @return boolean|number|string|\DateTime
+     * @return boolean|number|string|DateTime
+     * @throws Exception
      */
     protected function parse($value, array $definition)
     {
@@ -114,6 +117,7 @@ abstract class CustomData
                 {
                     return null;
                 }
+                return $this->parseBool($value);
 
             case self::TYPE_BOOL:
                 return $this->parseBool($value);
@@ -131,7 +135,7 @@ abstract class CustomData
                 return (string)$value;
 
             case self::TYPE_FILE:
-                return static::FILES_BASE_URL . (string)$value;
+                return static::FILES_BASE_URL . $value;
 
             case self::TYPE_DAT:
                 $format = isset($definition['format'])
@@ -183,7 +187,9 @@ abstract class CustomData
      * Analyse spécifique d'une date
      * @param string $value
      * @param string $format
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
+     * @throws Exception
      */
     protected function parseDate($value, $format = null)
     {
@@ -193,7 +199,7 @@ abstract class CustomData
             return null;
         }
 
-        if ($value instanceof \DateTime)
+        if ($value instanceof DateTime)
         {
             return $value;
         }
@@ -201,7 +207,7 @@ abstract class CustomData
         if (isset($format))
         {
             $value = trim($value);
-            $datetime = \DateTime::createFromFormat($format, $value);
+            $datetime = DateTime::createFromFormat($format, $value);
             if (!$datetime)
             {
                 throw new Exception(
@@ -214,10 +220,10 @@ abstract class CustomData
 
         if (ctype_digit($value))
         {
-            return new \DateTime($value);
+            return new DateTime($value);
         }
 
-        return new \DateTime(strtotime($value));
+        return new DateTime(strtotime($value));
     }
 
 }

@@ -2,6 +2,8 @@
 
 namespace HelloAsso\V3\Traits;
 
+use Exception;
+
 /**
  * Méthode liées au teste :
  * Mode test
@@ -43,7 +45,7 @@ trait Testable
      * Autorise l'ajout d'une nouvelle propriété si "Extensible" (conseillé pour gérer d'éventuelles nouvelles données dans l'API HelloAsso)
      * @param string $name
      * @param mixed $value
-     * @throws \Exception
+     * @throws Exception
      */
     public function __set($name, $value)
     {
@@ -54,14 +56,14 @@ trait Testable
     	
     	if (! self::$TEST_MODE && $property_exists)
         {
-            throw new \Exception('Cannot access protected or private property '.get_class($this).'::'.$name);
+            throw new Exception('Cannot access protected or private property '.get_class($this).'::'.$name);
         }
         
         // La propriété n'existe pas et on n'est pas "extensible" : Erreur
         
         if (! $property_exists && ! self::$EXTENDABLE)
         {
-        	throw new \Exception('Inexistant property '.get_class($this).'::'.$name);
+        	throw new Exception('Inexistant property '.get_class($this).'::'.$name);
         }
         
         // Set la propriété
@@ -72,14 +74,14 @@ trait Testable
     /**
      * Refus de l'accès la la propriété si pas "Mode Test"
      * @param string $name
-     * @throws \Exception
+     * @throws Exception
      * @return mixed
      */
     public function __get($name)
     {
         if (! self::$TEST_MODE)
         {
-            throw new \Exception('Cannot access protected, private or inexistant property '.get_class($this).'::'.$name);
+            throw new Exception('Cannot access protected, private or inexistant property '.get_class($this).'::'.$name);
         }
         
         return $this->$name;

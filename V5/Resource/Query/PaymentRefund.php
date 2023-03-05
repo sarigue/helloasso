@@ -2,6 +2,8 @@
 
 namespace HelloAsso\V5\Resource\Query;
 
+use HelloAsso\V5\Api\Response;
+use HelloAsso\V5\Api\ResponseError;
 use HelloAsso\V5\Resource\Payment as PaymentResource;
 
 class PaymentRefund extends Payment
@@ -12,6 +14,7 @@ class PaymentRefund extends Payment
     /**
      * @param PaymentResource $payment
      * @return PaymentRefund
+     * @throws ResponseError
      */
     public static function instanciate(PaymentResource $payment)
     {
@@ -36,8 +39,8 @@ class PaymentRefund extends Payment
     }
 
     /**
-     * @return \HelloAsso\V5\Api\Response
-     * @throws \HelloAsso\V5\Api\ResponseError
+     * @return Response
+     * @throws ResponseError
      */
     public function refund()
     {

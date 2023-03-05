@@ -2,8 +2,8 @@
 
 namespace HelloAsso\V3;
 
-use HelloAsso\Callback\Campaign;
-use HelloAsso\Callback\Payment;
+use HelloAsso\V3\Callback\Campaign;
+use HelloAsso\V3\Callback\Payment;
 use HelloAsso\V3\traits\Testable;
 
 
@@ -26,7 +26,7 @@ abstract class Callback
 
 	/**
 	 * Callback de paiement depuis les données POST
-	 * @return \HelloAsso\Callback\Payment
+	 * @return Payment
 	 */
 	public static function createPayment()
 	{
@@ -35,7 +35,7 @@ abstract class Callback
 	
 	/**
 	 * Callback de campagne depuis les données POST
-	 * @return \HelloAsso\Callback\Payment
+	 * @return Campaign
 	 */
 	public static function createCampaign()
 	{

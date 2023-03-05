@@ -2,6 +2,8 @@
 
 namespace HelloAsso\V3\Resource;
 
+use DateTime;
+use Exception;
 use HelloAsso\V3\Traits\ModelGetter;
 use HelloAsso\V3\Resource;
 
@@ -27,7 +29,7 @@ class Payment extends Resource
 	const STATUS_AUTHORIZED = 'AUTHORIZED';
 	
 	/** @var string    */ public $id;
-	/** @var \DateTime */ public $date;
+	/** @var DateTime */ public $date;
 	/** @var float     */ public $amount;
 	/** @var string    */ public $type;
 	/** @var string    */ public $mean;
@@ -38,7 +40,7 @@ class Payment extends Resource
 	/** @var string    */ public $payer_city;
 	/** @var string    */ public $payer_country;
 	/** @var string    */ public $payer_email;
-	/** @var \DateTime */ public $payer_birthdate;
+	/** @var DateTime */ public $payer_birthdate;
 	/** @var string    */ public $payer_citizenship;
 	/** @var string    */ public $payer_society;
 	/** @var boolean   */ public $payer_is_society;
@@ -46,8 +48,11 @@ class Payment extends Resource
 	/** @var string    */ public $url_tax_receipt;
 	/** @var string    */ public $status;
 	/** @var PaymentAction[] */ public $actions = [];
-	
-	public function __construct($json)
+
+    /**
+     * @throws Exception
+     */
+    public function __construct($json)
 	{
 		foreach($json->actions as $action)
 		{
@@ -57,11 +62,11 @@ class Payment extends Resource
 		parent::__construct($json);
 		if (!empty($this->date))
 		{
-			$this->date = new \DateTime($this->date);
+			$this->date = new DateTime($this->date);
 		}
 		if (!empty($this->payer_birthdate))
 		{
-			$this->payer_birthdate = new \DateTime($this->payer_birthdate);
+			$this->payer_birthdate = new DateTime($this->payer_birthdate);
 		}
 	}
 	

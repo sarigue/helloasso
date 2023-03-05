@@ -1,8 +1,11 @@
 <?php 
 namespace HelloAsso\V5;
 
+use DateTime;
+use Exception;
 use HelloAsso\V5\Resource\Data\Meta as MetaResource;
 use HelloAsso\V5\Traits\Response\Meta as MetaTrait;
+use stdClass;
 
 /**
  * Abstract class for HelloAsso resources
@@ -14,9 +17,11 @@ abstract class Resource
 {
     const RESOURCE_NAME = '';
 
-	/**
-	 * @param \stdClass|array $json
-	 */
+    /**
+     * @param stdClass|array $json
+     * @throws Exception
+     * @throws Exception
+     */
 	public function __construct($json)
 	{
         // set property
@@ -25,7 +30,7 @@ abstract class Resource
 		{
             if ($field == 'date')
             {
-                $this->date = new \DateTime($value);
+                $this->date = new DateTime($value);
                 continue;
             }
             if ($field == 'meta' && $this->useMeta())
@@ -57,7 +62,7 @@ abstract class Resource
     }
 
     /**
-     * @param \stdClass $value
+     * @param mixed $value
      * @param string $classname
      * @return void
      */

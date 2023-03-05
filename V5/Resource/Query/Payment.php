@@ -2,8 +2,7 @@
 
 namespace HelloAsso\V5\Resource\Query;
 
-use HelloAsso\V5\Api\Authentication;
-use HelloAsso\V5\Resource\Order as OrderResource;
+use HelloAsso\V5\Api\ResponseError;
 use HelloAsso\V5\Resource\Payment as PaymentResource;
 use HelloAsso\V5\ResourceQuery;
 use HelloAsso\V5\Traits\RequestFilter\Date;
@@ -21,6 +20,9 @@ class Payment extends ResourceQuery
     use State;
 
 
+    /**
+     * @throws ResponseError
+     */
     public function searchFromForm($formType, $formSlug)
     {
         $route = '/organizations/' . $this->organization_slug
@@ -31,6 +33,9 @@ class Payment extends ResourceQuery
         return $this->execute($route)->setResourceClass(static::RESOURCE_CLASS);
     }
 
+    /**
+     * @throws ResponseError
+     */
     public function searchFromOrganization()
     {
         $route = '/organizations/' . $this->organization_slug

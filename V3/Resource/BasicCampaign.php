@@ -2,7 +2,9 @@
 
 namespace HelloAsso\V3\Resource;
 
-use HelloAsso\Api\Query;
+use HelloAsso\V3\Api\Exception;
+use HelloAsso\V3\Api\Query;
+use HelloAsso\V3\Api\Pagination;
 use HelloAsso\V3\Resource;
 
 /**
@@ -33,16 +35,21 @@ class BasicCampaign extends Resource
 	{
 		parent::__construct($json);
 	}
-	
-	/**
-	 * Récupère les campagnes d'un organisme par son slug
-	 * @param string $slug
-	 * @param string $type
-	 * @param integer $page
-	 * @param integer $results_per_page
-	 * @param Pagination & $pagination
-	 * @return \HelloAsso\Resource\BasicCampaign[]
-	 */
+
+    /**
+     * Récupère les campagnes d'un organisme par son slug
+     * @param string $slug
+     * @param string $type
+     * @param integer $page
+     * @param integer $results_per_page
+     * @param Pagination & $pagination
+     * @return BasicCampaign[]
+     * @throws \Exception
+     * @throws \Exception
+     * @throws Exception
+     * @throws \Exception
+     * @noinspection PhpReturnDocTypeMismatchInspection
+     */
 	public static function searchForOrganismSlug($slug, $type = NULL, $page = NULL, $results_per_page = NULL, &$pagination = NULL)
 	{
 	    $response = Query::create(static::RESOURCE_NAME)
@@ -55,18 +62,24 @@ class BasicCampaign extends Resource
 	    ->throwException();
 	    
 	    $pagination = $response->getPagination();
-	    return $response->getResource(static::class);
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $response->getResource(static::class);
 	}
-	
-	/**
-	 * Récupère les campagnes d'un organisme par son ID
-	 * @param string $organism_id
-	 * @param string $type
-	 * @param integer $page
-	 * @param integer $results_per_page
-	 * @param Pagination & $pagination
-	 * @return \HelloAsso\Resource\BasicCampaign[]
-	 */
+
+    /**
+     * Récupère les campagnes d'un organisme par son ID
+     * @param string $organism_id
+     * @param string $type
+     * @param integer $page
+     * @param integer $results_per_page
+     * @param Pagination & $pagination
+     * @return BasicCampaign[]
+     * @throws \Exception
+     * @throws \Exception
+     * @throws Exception
+     * @throws \Exception
+     * @noinspection PhpReturnDocTypeMismatchInspection
+     */
 	public static function searchForOrganismId($organism_id, $type = NULL, $page = NULL, $results_per_page = NULL, &$pagination = NULL)
 	{
 	    $response = Query::create(static::RESOURCE_NAME)
@@ -79,6 +92,7 @@ class BasicCampaign extends Resource
 	    ->throwException();
 	    
 	    $pagination = $response->getPagination();
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
 	    return $response->getResource(static::class);
 	}
 }

@@ -3,6 +3,8 @@
 namespace HelloAsso\V5\Resource\Data;
 
 
+use DateTime;
+use Exception;
 use HelloAsso\V5\Resource;
 use HelloAsso\V5\Traits\Response\Meta;
 
@@ -21,13 +23,16 @@ class Payer extends Resource
     /** @var string    */ public $city;
     /** @var string    */ public $zipCode;
     /** @var string    */ public $country;
-    /** @var \DateTime */ public $dateOfBirth;
+    /** @var DateTime */ public $dateOfBirth;
     /** @var bool      */ public $firstName;
     /** @var bool      */ public $lastName;
 
+    /**
+     * @throws Exception
+     */
     public function __construct($json)
     {
         parent::__construct($json);
-        $this->dateOfBirth = new \DateTime($this->dateOfBirth);
+        $this->dateOfBirth = new DateTime($this->dateOfBirth);
     }
 }

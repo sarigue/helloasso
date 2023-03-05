@@ -2,6 +2,7 @@
 namespace HelloAsso\V3;
 
 use HelloAsso\V3\Traits\Testable;
+use stdClass;
 
 
 /**
@@ -16,7 +17,7 @@ abstract class Resource
     use Testable;
     
 	/**
-	 * @param \stdClass|array $json
+	 * @param stdClass|array $json
 	 */
 	public function __construct($json)
 	{

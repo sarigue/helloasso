@@ -3,6 +3,8 @@
 namespace HelloAsso\V5\Resource\Data;
 
 
+use DateTime;
+use Exception;
 use HelloAsso\V5\Resource;
 
 /**
@@ -38,6 +40,9 @@ class CustomField extends Resource
         return $this->name;
     }
 
+    /**
+     * @throws Exception
+     */
     public function value()
     {
         switch ($this->type)
@@ -57,9 +62,9 @@ class CustomField extends Resource
                 }
                 if (ctype_digit($this->answer))
                 {
-                    return new \DateTime($this->answer);
+                    return new DateTime($this->answer);
                 }
-                return new \DateTime(strtotime($this->answer));
+                return new DateTime(strtotime($this->answer));
 
             case self::TYPE_NUMBER:
                 if ($this->answer == '')
@@ -73,7 +78,7 @@ class CustomField extends Resource
                 return (float)trim($this->answer);
 
             default:
-                return (string)$this->answer;
+                return $this->answer;
         }
     }
 

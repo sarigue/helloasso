@@ -3,6 +3,9 @@
 namespace HelloAsso\V5\Resource;
 
 
+use DateTime;
+use Exception;
+use HelloAsso\V5\Api\ResponseError;
 use HelloAsso\V5\Resource;
 use HelloAsso\V5\Resource\Data\Amount;
 use HelloAsso\V5\Resource\Data\Payer;
@@ -21,7 +24,7 @@ class Order extends Resource
     const RESOURCE_NAME = 'orders';
 
     /** @var string    */ public $id;
-    /** @var \DateTime */ public $date;
+    /** @var DateTime */ public $date;
     /** @var string    */ public $formSlug;
     /** @var string    */ public $formType;
     /** @var string    */ public $organizationName;
@@ -46,6 +49,8 @@ class Order extends Resource
 
     /**
      * @return $this
+     * @throws ResponseError
+     * @throws Exception
      */
     public function refresh()
     {

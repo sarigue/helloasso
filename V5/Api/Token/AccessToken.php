@@ -68,6 +68,11 @@ class AccessToken
     /**
      * @var string
      */
+    protected $iss;
+
+    /**
+     * @var string
+     */
     protected $aud;
 
 
@@ -75,7 +80,7 @@ class AccessToken
     {
         $this->value = $token;
         $this->type  = $type;
-        list($header, $payload, $sign) = explode('.', $token);
+        $payload = explode('.', $token)[1];
         $payload = json_decode(base64_decode($payload), true);
         $this->jti = $payload['jti'];
         $this->cps = $payload['cps'];
@@ -126,7 +131,7 @@ class AccessToken
      */
     public function hasRight($right)
     {
-        return in_array($this->cps, $right);
+        return in_array($right, $this->cps);
     }
 
     /**

@@ -1,13 +1,16 @@
 <?php
 namespace HelloAsso\V5\Api;
 
+use Exception;
+use stdClass;
+
 /**
  * API Exception
  * 
  * @author fraoult
  * @license MIT
  */
-class ResponseError extends \Exception
+class ResponseError extends Exception
 {
 
     /**
@@ -15,7 +18,7 @@ class ResponseError extends \Exception
      */
     protected $body = null;
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $modelState = null;
 
@@ -27,8 +30,8 @@ class ResponseError extends \Exception
     public function __construct(
         $body = '',
         $code = 0,
-        Request $request,
-        Throwable $previous = null
+        Request $request = null,
+        Exception $previous = null
     )
     {
         $this->body    = $body;
@@ -37,7 +40,6 @@ class ResponseError extends \Exception
         $curl = $request->getCurlData()['result'];
         $ctype = isset($curl['content_type']) ? $curl['content_type'] : null;
 
-        $message = '';
         $json = null;
         if (!empty($body) && $ctype == 'application/json')
         {

@@ -3,6 +3,8 @@ namespace HelloAsso\V5;
 
 use HelloAsso\V5\Api\Authentication;
 use HelloAsso\V5\Api\Request;
+use HelloAsso\V5\Api\Response;
+use HelloAsso\V5\Api\ResponseError;
 
 /**
  * Build API Request
@@ -112,8 +114,8 @@ class ResourceQuery extends Request
     }
 
     /**
-     * @return \HelloAsso\V5\Api\Response
-     * @throws \HelloAsso\V5\Api\ResponseError
+     * @return Response
+     * @throws ResponseError
      */
     public function search()
     {
@@ -125,8 +127,8 @@ class ResourceQuery extends Request
 
     /**
      * @param string $id
-     * @return \HelloAsso\V5\Api\Response
-     * @throws \HelloAsso\V5\Api\ResponseError
+     * @return Response
+     * @throws ResponseError
      */
     public function get($id)
     {

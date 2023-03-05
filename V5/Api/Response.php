@@ -2,6 +2,7 @@
 namespace HelloAsso\V5\Api;
 
 
+use Exception;
 use stdClass;
 
 /**
@@ -151,9 +152,8 @@ class Response
 
     /**
      * Parse response as $class Resource
-     * @param $class
      * @return Resource
-     * @throws \Exception
+     * @throws Exception
      */
     public function getResource()
     {
@@ -176,7 +176,7 @@ class Response
      * Parse response as $class Resource list
      * @param Pagination $pagination
      * @return Resource[]
-     * @throws \Exception
+     * @throws Exception
      */
     public function getCollection(Pagination &$pagination = null)
     {
@@ -206,7 +206,7 @@ class Response
      * Parse response as $class Resource or list
      * @param Pagination $pagination
      * @return Resource[]|Resource
-     * @throws \Exception
+     * @throws Exception
      */
     public function getContent(Pagination &$pagination = null)
     {
@@ -222,13 +222,13 @@ class Response
     /**
      * Get Ressource class name
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getResourceClass()
     {
         if (empty($this->class))
         {
-            throw new \Exception('No class defined');
+            throw new Exception('No class defined');
         }
         return $this->class;
     }

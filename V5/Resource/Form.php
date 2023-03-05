@@ -3,6 +3,10 @@
 namespace HelloAsso\V5\Resource;
 
 
+use DateTime;
+use Exception;
+use HelloAsso\V5\Api\Response;
+use HelloAsso\V5\Api\ResponseError;
 use HelloAsso\V5\Resource;
 use HelloAsso\V5\Resource\Data\Banner;
 use HelloAsso\V5\Resource\Data\Tiers;
@@ -37,8 +41,8 @@ class Form extends Resource
     /** @var Banner    */ public $banner;
     /** @var string    */ public $currency;
     /** @var string    */ public $description;
-    /** @var \DateTime */ public $startDate;
-    /** @var \DateTime */ public $endDate;
+    /** @var DateTime */ public $startDate;
+    /** @var DateTime */ public $endDate;
     /** @var string    */ public $state;
     /** @var string    */ public $title;
     /** @var string    */ public $widgetButtonUrl;
@@ -55,8 +59,14 @@ class Form extends Resource
         parent::__construct($json);
         $this->convert($this->banner, Banner::class);
         $this->convert($this->tiers, Tiers::class);
-        $this->startDate = new \DateTime($this->startDate);
-        $this->endDate = new \DateTime($this->endDate);
+        try {
+            $this->startDate = new DateTime($this->startDate);
+        } catch (Exception $e) {
+        }
+        try {
+            $this->endDate = new DateTime($this->endDate);
+        } catch (Exception $e) {
+        }
         if ($this->organizationLogo)
         {
             $this->organizationLogo = str_replace(' ', '%20', $this->organizationLogo);
@@ -66,9 +76,10 @@ class Form extends Resource
     /**
      * @param string $slug
      * @param string $type
-     * @return \HelloAsso\V5\Api\Response
-     * @throws \HelloAsso\V5\Api\ResponseError
+     * @return Response
+     * @throws ResponseError
      * @see Queryable::getResponse()
+     * @noinspection PhpParameterNameChangedDuringInheritanceInspection
      */
     public static function getResponse($slug, $type)
     {
@@ -82,8 +93,10 @@ class Form extends Resource
      * @param string $slug
      * @param string $type
      * @return void
-     * @throws \HelloAsso\V5\Api\ResponseError
+     * @throws ResponseError
+     * @throws Exception
      * @see Queryable::get()
+     * @noinspection PhpParameterNameChangedDuringInheritanceInspection
      */
     public static function get($slug, $type)
     {
@@ -93,15 +106,19 @@ class Form extends Resource
     }
 
     /**
-     * @see Queryable::refresh()
      * @return $this
+     * @throws Exception
+     * @see Queryable::refresh()
      */
     public function refresh()
     {
-        $this->__construct(
-            static::getResponse($this->formSlug, $this->formType)
-                ->getData()
-        );
+        try {
+            $this->__construct(
+                static::getResponse($this->formSlug, $this->formType)
+                    ->getData()
+            );
+        } catch (ResponseError $e) {
+        }
         return $this;
     }
 

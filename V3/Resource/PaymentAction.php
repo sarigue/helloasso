@@ -2,6 +2,7 @@
 
 namespace HelloAsso\V3\Resource;
 
+use Exception;
 use HelloAsso\V3\Resource;
 
 /**
@@ -17,11 +18,12 @@ class PaymentAction extends Resource
 	/** @var float     */ public $amount;
 	/** @var float     */ public $status;
 	
-	/** @var \HelloAsso\Resource\Action */ protected $action;
-	
-	/**
-	 * @return \HelloAsso\Resource\Action
-	 */
+	/** @var Action */ protected $action;
+
+    /**
+     * @return Action
+     * @throws Exception
+     */
 	public function getAction()
 	{
 		if (empty($this->action))

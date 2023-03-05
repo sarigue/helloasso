@@ -1,7 +1,10 @@
 <?php
 namespace HelloAsso\V3\Traits;
 
+use Exception;
+use HelloAsso\V3\Api\Pagination;
 use HelloAsso\V3\Api\Query;
+use HelloAsso\V3\Resource;
 
 /**
  * Méthode de récupération
@@ -13,23 +16,29 @@ trait ModelGetter
 {
     /**
      * @param string $id
-     * @return \HelloAsso\V3\Resource
+     * @return static
+     * @throws Exception
+     * @noinspection PhpReturnDocTypeMismatchInspection
      */
     public static function get($id)
     {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return Query::create(static::RESOURCE_NAME, $id)
-        ->setOrganismId(NULL)    // On a un ID : donc pas de précision Organisme / Campagne
-        ->setOrganismSlug(NULL)  // On a un ID : donc pas de précision Organisme / Campagne
-        ->setCampaignId(NULL)    // On a un ID : donc pas de précision Organisme / Campagne
-        ->setPrivate()
-        ->execute()
-        ->throwException()
-        ->getResource(static::class);
+            ->setOrganismId(null)    // On a un ID : donc pas de précision Organisme / Campagne
+            ->setOrganismSlug(null)  // On a un ID : donc pas de précision Organisme / Campagne
+            ->setCampaignId(null)    // On a un ID : donc pas de précision Organisme / Campagne
+            ->setPrivate()
+            ->execute()
+            ->throwException()
+            ->getResource(static::class);
     }
-    
+
     /**
-     * @param \HelloAsso\Api\Pagination & $pagination
-     * @return \HelloAsso\V3\Resource[]
+     * @param Pagination & $pagination
+     * @return Resource[]
+     * @throws Exception
+     * @throws Exception
+     * @throws Exception
      */
     public static function getAll(&$pagination = NULL)
     {

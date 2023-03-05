@@ -1,6 +1,9 @@
 <?php
 namespace HelloAsso\V3\Api;
 
+use HelloAsso\V3\Resource;
+use stdClass;
+
 /**
  * Réponse de l'API HelloAsso
  * 
@@ -18,7 +21,7 @@ class Response
     
     /**
      *
-     * @param \stdClass $json
+     * @param stdClass $json
      * @param integer   $code
      */
     public function __construct($json, $code = NULL)
@@ -48,7 +51,7 @@ class Response
     
     /**
      * @param string $classname
-     * @return \HelloAsso\Api\Response
+     * @return Response
      */
     public function setResourceClass($classname)
     {
@@ -65,16 +68,17 @@ class Response
     }
     
     /**
-     * @return \HelloAsso\Api\Exception
+     * @return Exception
      */
     public function getException()
     {
         return $this->exception;
     }
-    
+
     /**
-     * @throws \HelloAsso\Api\Exception
      * @return $this Si l'exception n'est pas lancée
+     * @throws Exception
+     * @throws Exception
      */
     public function throwException()
     {
@@ -86,7 +90,7 @@ class Response
     }
     
     /**
-     * @return number
+     * @return int
      */
     public function getHttpCode()
     {
@@ -94,7 +98,7 @@ class Response
     }
     
     /**
-     * @return \stdClass|\stdClass[]
+     * @return stdClass|stdClass[]
      */
     public function getData()
     {
@@ -110,18 +114,19 @@ class Response
     }
     
     /**
-     * @return \HelloAsso\Api\Pagination
+     * @return Pagination
      */
     public function getPagination()
     {
         return $this->pagination;
     }
-    
+
     /**
      * Parse la réponse en tant que $classe
      * et retourne la ressource ou collection de ressources
      * @param string $class
-     * @return \HelloAsso\V3\Resource[]|\HelloAsso\V3\Resource
+     * @return Resource[]|Resource
+     * @throws \Exception
      */
     public function getResource($class = NULL)
     {

@@ -2,6 +2,8 @@
 
 namespace HelloAsso\V3\Resource;
 
+use DateTime;
+use Exception;
 use HelloAsso\V3\Traits\ModelGetter;
 use HelloAsso\V3\Resource;
 
@@ -38,24 +40,27 @@ class Campaign extends Resource
 	/** @var string      */ public $url;
 	/** @var string      */ public $id_organism;
 	/** @var string      */ public $slug_organism;
-	/** @var \DateTime   */ public $creation_date;
-	/** @var \DateTime   */ public $last_update;
+	/** @var DateTime   */ public $creation_date;
+	/** @var DateTime   */ public $last_update;
 	/** @var string      */ public $place_name;
 	/** @var string      */ public $place_address;
 	/** @var string      */ public $place_city;
 	/** @var string      */ public $place_zipcode;
 	/** @var string      */ public $place_country;
-	/** @var \DateTime   */ public $start_date;
-	/** @var \DateTime   */ public $end_date;
-	
-	public function __construct($json)
+	/** @var DateTime   */ public $start_date;
+	/** @var DateTime   */ public $end_date;
+
+    /**
+     * @throws Exception
+     */
+    public function __construct($json)
 	{
 		parent::__construct($json);
 		foreach(['creation_date', 'last_update', 'start_date', 'end_date'] as $field)
 		{
 			if (!empty($this->$field))
 			{
-				$this->$field = new \DateTime($this->$field);
+				$this->$field = new DateTime($this->$field);
 			}
 		}
 	}

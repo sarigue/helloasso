@@ -3,6 +3,8 @@
 namespace HelloAsso\V5\Resource;
 
 
+use Exception;
+use HelloAsso\V5\Api\ResponseError;
 use HelloAsso\V5\Resource;
 use HelloAsso\V5\Resource\Data\CustomField;
 use HelloAsso\V5\Resource\Data\Payer;
@@ -71,6 +73,8 @@ class Item extends Resource
 
     /**
      * @return $this
+     * @throws ResponseError
+     * @throws Exception
      */
     public function refresh()
     {

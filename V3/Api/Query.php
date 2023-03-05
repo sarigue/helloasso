@@ -52,13 +52,14 @@ class Query
 	protected $organism_id      = NULL;
 	protected $campaign_id      = NULL;
 	protected $public           = FALSE;
-	
-	/**
-	 * Création
-	 * @param string $resource_name
-	 * @param string $id
-	 * @return \HelloAsso\Api\Query
-	 */
+
+    /**
+     * Création
+     * @param string $resource_name
+     * @param string $id
+     * @return Query
+     * @throws \Exception
+     */
 	public static function create($resource_name, $id = NULL)
 	{
 	    return new static($resource_name, $id);
@@ -101,12 +102,13 @@ class Query
 	{
 	    static::$CAMPAIGN_ID = $campaign_id;
 	}
-	
-	/**
-	 * Constructeur
-	 * @param string $resource
-	 * @param string $id
-	 */
+
+    /**
+     * Constructeur
+     * @param string $resource_name
+     * @param string $id
+     * @throws \Exception
+     */
 	public function __construct($resource_name, $id = NULL)
 	{
 	    // Si la ressource données est en fait une classe de ressource
@@ -177,7 +179,7 @@ class Query
 	/**
 	 * Organisme
 	 * @param string $slug
-	 * @return \HelloAsso\Api\Query
+	 * @return Query
 	 */
 	public function setOrganismSlug($slug)
 	{
@@ -199,7 +201,7 @@ class Query
     /**
      * Utiliser l'API public
      * @param boolean $public
-     * @return \HelloAsso\Api\Query
+     * @return Query
      */
 	public function setPublic($public = TRUE)
 	{
@@ -209,8 +211,8 @@ class Query
 	
 	/**
 	 * Utiliser l'API privé
-	 * @param boolean $public
-	 * @return \HelloAsso\Api\Query
+	 * @param boolean $private
+	 * @return Query
 	 */
 	public function setPrivate($private = TRUE)
 	{
@@ -240,11 +242,12 @@ class Query
 		$this->query[$name] = $value;
 		return $this;
 	}
-	
-	/**
-	 * Construction de l'URL de requête
-	 * @return string
-	 */
+
+    /**
+     * Construction de l'URL de requête
+     * @return string
+     * @throws \Exception
+     */
 	public function build()
 	{
 		$url = self::API_URL;
@@ -296,12 +299,12 @@ class Query
 		
 		return $url;
 	}
-	
-	/**
-	 * Exécute la requête
-	 * @param boolean $public
-	 * @return Response
-	 */
+
+    /**
+     * Exécute la requête
+     * @return Response
+     * @throws \Exception
+     */
 	public function execute()
 	{
 		$curl = curl_init($this->build());

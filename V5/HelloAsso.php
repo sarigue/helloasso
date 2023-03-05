@@ -4,6 +4,7 @@ namespace HelloAsso\V5;
 
 use HelloAsso\V5\Api\Authentication;
 use HelloAsso\V5\Api\Request;
+use HelloAsso\V5\Api\ResponseError;
 
 /**
  * Main entry point
@@ -25,18 +26,24 @@ class HelloAsso
         return $this;
     }
 
-    public function setOrganization($slug, $id = null)
+    public function setOrganization($slug)
     {
-        static::organization($slug, $id);
+        static::organization($slug);
         return $this;
     }
 
+    /**
+     * @throws ResponseError
+     */
     public function setAuth(Authentication $auth)
     {
         static::initAuthentication($auth);
         return $this;
     }
 
+    /**
+     * @throws ResponseError
+     */
     public function authenticate()
     {
         static::initAuthentication();
@@ -50,7 +57,7 @@ class HelloAsso
     /**
      * Set default ID and password
      * @param string $id
-     * @param string $password
+     * @param string $secret
      */
     public static function client($id, $secret)
     {
@@ -61,9 +68,8 @@ class HelloAsso
     /**
      * Set default organization ID and slug
      * @param string $slug
-     * @param string $id
      */
-    public static function organization($slug, $id = null)
+    public static function organization($slug)
     {
         ResourceQuery::$defaultOrganisationSlug = $slug;
     }
@@ -71,7 +77,7 @@ class HelloAsso
     /**
      * Set with Authentication or init new Authentication
      * @param Authentication $auth
-     * @throws \HelloAsso\V5\Api\ResponseError
+     * @throws ResponseError
      */
     public static function initAuthentication($auth = null)
     {

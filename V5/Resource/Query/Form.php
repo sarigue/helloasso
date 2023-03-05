@@ -2,8 +2,10 @@
 
 namespace HelloAsso\V5\Resource\Query;
 
+use Exception;
+use HelloAsso\V5\Api\Response;
+use HelloAsso\V5\Api\ResponseError;
 use HelloAsso\V5\Resource\Form as FormResource;
-use HelloAsso\V5\Resource\Item as ItemResource;
 use HelloAsso\V5\ResourceQuery;
 use HelloAsso\V5\Traits\RequestFilter\Paginate;
 use HelloAsso\V5\Traits\RequestFilter\State;
@@ -30,11 +32,17 @@ class Form extends ResourceQuery
     /**
      * @param string $slug
      * @param string $type
-     * @return \HelloAsso\V5\Api\Response
-     * @throws \HelloAsso\V5\Api\ResponseError
+     * @return Response
+     * @throws ResponseError
+     * @throws Exception
+     * @noinspection PhpParameterNameChangedDuringInheritanceInspection
      */
-    public function get($slug, $type)
+    public function get($slug, $type = null)
     {
+        if (empty($type))
+        {
+            throw new Exception('$type argument missing');
+        }
         $route = 'organizations/' . $this->organization_slug
             . '/' . $this->resource_path. '/' . $type
             . '/' . $slug
