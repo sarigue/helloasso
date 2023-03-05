@@ -1,0 +1,8 @@
+{
+  "name": "sarigue/helloasso",
+  "description": "Library to user HellAsso.com API",
+  "license": "MIT",
+  "require": {
+    "php": ">=5.6"
+  }
+}
