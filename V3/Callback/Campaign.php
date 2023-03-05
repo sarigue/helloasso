@@ -2,9 +2,6 @@
 
 namespace HelloAsso\V3\Callback;
 
-require_once __DIR__.'/../Resource.php';
-require_once __DIR__.'/../Callback.php';
-
 use HelloAsso\Callback;
 use HelloAsso\V3\Resource;
 
@@ -55,7 +52,7 @@ class Campaign extends Callback
 	 */
 	public function getCampaign()
 	{
-		return Resource\Campaign::get($this->id);
+		return resource\Campaign::get($this->id);
 	}
 	
 }

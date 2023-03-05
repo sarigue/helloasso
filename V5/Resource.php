@@ -1,7 +1,7 @@
 <?php 
 namespace HelloAsso\V5;
 
-use HelloAsso\V5\Resource\Meta\Meta as MetaResource;
+use HelloAsso\V5\Resource\Data\Meta as MetaResource;
 use HelloAsso\V5\Traits\Response\Meta as MetaTrait;
 
 /**

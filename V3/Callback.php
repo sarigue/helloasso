@@ -4,8 +4,8 @@ namespace HelloAsso\V3;
 
 use HelloAsso\Callback\Campaign;
 use HelloAsso\Callback\Payment;
+use HelloAsso\V3\traits\Testable;
 
-require_once __DIR__.'/traits/Testable.php';
 
 /**
  * Methode abstraite callback
@@ -52,6 +52,3 @@ abstract class Callback
 		return isset($_POST[$key]) ? $_POST[$key] : NULL;
 	}
 }
-
-require_once __DIR__.'/callback/Payment.php';
-require_once __DIR__.'/callback/Campaign.php';

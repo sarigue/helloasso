@@ -2,8 +2,6 @@
 
 namespace HelloAsso\V3\Resource;
 
-require_once __DIR__ . '/../Resource.php';
-
 use HelloAsso\Api\Query;
 use HelloAsso\V3\Resource;
 

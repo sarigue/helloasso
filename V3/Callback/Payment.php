@@ -2,9 +2,6 @@
 
 namespace HelloAsso\V3\Callback;
 
-require_once __DIR__.'/../Callback.php';
-require_once __DIR__.'/../Resource.php';
-
 use HelloAsso\Callback;
 use HelloAsso\V3\Resource;
 
@@ -65,7 +62,7 @@ class Payment extends Callback
 	{
 		if (empty($this->action) && isset($this->action_id))
 		{
-		    $this->action = Resource\Action::get($this->action_id);
+		    $this->action = resource\Action::get($this->action_id);
 		}
 		return $this->action;
 	}
@@ -78,7 +75,7 @@ class Payment extends Callback
 	{
 		if (empty($this->payment))
 		{
-		    $this->payment = Resource\Payment::get($this->id);
+		    $this->payment = resource\Payment::get($this->id);
 		}
 		return $this->payment;
 	}

@@ -12,7 +12,7 @@ use HelloAsso\V5\Traits\RequestFilter\UserSearchKey;
 
 class Item extends ResourceQuery
 {
-    const RESOURCE_PATH = ItemResource::RESOURCE_NAME;
+    const RESOURCE_CLASS = ItemResource::class;
 
     use Date;
     use Paginate;

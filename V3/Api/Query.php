@@ -1,8 +1,6 @@
 <?php
 namespace HelloAsso\V3\Api;
 
-require_once __DIR__.'/Response.php';
-
 /**
  * Construction d'une requête d'API
  * 

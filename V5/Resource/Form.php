@@ -4,8 +4,8 @@ namespace HelloAsso\V5\Resource;
 
 
 use HelloAsso\V5\Resource;
-use HelloAsso\V5\Resource\Meta\Banner;
-use HelloAsso\V5\Resource\Meta\Tiers;
+use HelloAsso\V5\Resource\Data\Banner;
+use HelloAsso\V5\Resource\Data\Tiers;
 use HelloAsso\V5\Traits\Queryable;
 use HelloAsso\V5\Traits\Response\Meta;
 
@@ -64,26 +64,26 @@ class Form extends Resource
     }
 
     /**
-     * @see Queryable::getResponse()
      * @param string $slug
      * @param string $type
      * @return \HelloAsso\V5\Api\Response
      * @throws \HelloAsso\V5\Api\ResponseError
+     * @see Queryable::getResponse()
      */
     public static function getResponse($slug, $type)
     {
-        return Resource\Query\Form::create()
+        return Query\Form::create()
             ->get($slug, $type)
             ->throwException()
         ;
     }
 
     /**
-     * @see Queryable::get()
      * @param string $slug
      * @param string $type
      * @return void
      * @throws \HelloAsso\V5\Api\ResponseError
+     * @see Queryable::get()
      */
     public static function get($slug, $type)
     {

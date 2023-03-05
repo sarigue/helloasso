@@ -24,9 +24,23 @@ class Callback
     /** @var string   */ public $eventType;
     /** @var mixed    */ public $data;
 
+
+    /**
+     * @return static
+     */
+    public static function init()
+    {
+        return new static();
+    }
+
 	public function __construct()
 	{
 		$this->request = $_POST;
+        if (empty($_POST))
+        {
+            $request = file_get_contents('php://input');
+            $this->request = json_decode($request, true);
+        }
         $this->eventType = $this->getParam('eventType');
         $this->data = $this->getParam('data');
 	}
@@ -101,6 +115,6 @@ class Callback
 	 */
 	protected function getParam($key)
 	{
-		return isset($_POST[$key]) ? $_POST[$key] : NULL;
+		return isset($this->request[$key]) ? $this->request[$key] : NULL;
 	}
 }

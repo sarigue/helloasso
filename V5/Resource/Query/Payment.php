@@ -2,6 +2,8 @@
 
 namespace HelloAsso\V5\Resource\Query;
 
+use HelloAsso\V5\Api\Authentication;
+use HelloAsso\V5\Resource\Order as OrderResource;
 use HelloAsso\V5\Resource\Payment as PaymentResource;
 use HelloAsso\V5\ResourceQuery;
 use HelloAsso\V5\Traits\RequestFilter\Date;
@@ -11,7 +13,7 @@ use HelloAsso\V5\Traits\RequestFilter\State;
 
 class Payment extends ResourceQuery
 {
-    const RESOURCE_PATH = PaymentResource::RESOURCE_NAME;
+    const RESOURCE_CLASS = PaymentResource::class;
 
     use Date;
     use Paginate;
@@ -26,7 +28,7 @@ class Payment extends ResourceQuery
             . '/' . $formSlug
             . '/payments'
         ;
-        return $this->execute($route);
+        return $this->execute($route)->setResourceClass(static::RESOURCE_CLASS);
     }
 
     public function searchFromOrganization()
@@ -34,7 +36,7 @@ class Payment extends ResourceQuery
         $route = '/organizations/' . $this->organization_slug
             . '/payments'
         ;
-        return $this->execute($route);
+        return $this->execute($route)->setResourceClass(self::RESOURCE_CLASS);
     }
 
 

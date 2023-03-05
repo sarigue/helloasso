@@ -4,8 +4,6 @@ namespace HelloAsso\V5;
 
 use HelloAsso\V5\Api\Authentication;
 use HelloAsso\V5\Api\Request;
-use HelloAsso\V5\Callback;
-use HelloAsso\V5\Resource;
 
 /**
  * Main entry point
@@ -73,7 +71,7 @@ class HelloAsso
     /**
      * Set with Authentication or init new Authentication
      * @param Authentication $auth
-     * @throws Api\ResponseError
+     * @throws \HelloAsso\V5\Api\ResponseError
      */
     public static function initAuthentication($auth = null)
     {

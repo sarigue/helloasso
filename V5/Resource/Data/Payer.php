@@ -1,6 +1,6 @@
 <?php
 
-namespace HelloAsso\V5\Resource;
+namespace HelloAsso\V5\Resource\Data;
 
 
 use HelloAsso\V5\Resource;

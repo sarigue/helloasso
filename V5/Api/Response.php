@@ -155,7 +155,7 @@ class Response
      * @return Resource
      * @throws \Exception
      */
-    public function getResource($class = null)
+    public function getResource()
     {
 
         if ($this->is_collection)
@@ -168,17 +168,17 @@ class Response
             return null;
         }
 
-        $class = $this->getResourceClass($class);
+        $class = $this->getResourceClass();
         return new $class($this->data);
     }
 
     /**
      * Parse response as $class Resource list
-     * @param string $class
+     * @param Pagination $pagination
      * @return Resource[]
      * @throws \Exception
      */
-    public function getCollection($class = null)
+    public function getCollection(Pagination &$pagination = null)
     {
         if (!$this->is_collection)
         {
@@ -190,7 +190,9 @@ class Response
             return null;
         }
 
-        $class = $this->getResourceClass($class);
+        $pagination = $this->pagination;
+
+        $class = $this->getResourceClass();
         $collection = [];
         foreach($this->data as $data)
         {
@@ -202,34 +204,33 @@ class Response
 
     /**
      * Parse response as $class Resource or list
-     * @param string $class
+     * @param Pagination $pagination
      * @return Resource[]|Resource
      * @throws \Exception
      */
-    public function getContent($class = NULL)
+    public function getContent(Pagination &$pagination = null)
     {
         if ($this->is_collection)
         {
-            return $this->getCollection($class);
+            return $this->getCollection($pagination);
         }
 
-        return $this->getResource($class);
+        return $this->getResource();
     }
 
 
     /**
      * Get Ressource class name
-     * @param string $class
      * @return string
      * @throws \Exception
      */
-    protected function getResourceClass($class = null)
+    protected function getResourceClass()
     {
-        if (empty($class) && empty($this->class))
+        if (empty($this->class))
         {
             throw new \Exception('No class defined');
         }
-        return $class ?: $this->class;
+        return $this->class;
     }
 
 

@@ -2,9 +2,7 @@
 
 namespace HelloAsso\V3\Resource;
 
-require_once __DIR__ . '/../Resource.php';
-
-use HelloAsso\ModelGetter;
+use HelloAsso\V3\Traits\ModelGetter;
 use HelloAsso\V3\Resource;
 
 /**

@@ -216,18 +216,30 @@ class Authentication
         $headers = [
             'Content-Type: application/x-www-form-urlencoded',
         ];
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
-        $json      = json_decode(curl_exec($curl), true);
+        $options = [
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_SSL_VERIFYPEER => 1,
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_POSTFIELDS => http_build_query($data)
+        ];
+        curl_setopt_array($curl, $options);
+        $result    = curl_exec($curl);
+        $json      = json_decode($result, true);
         $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $infos     = curl_getinfo($curl);
         curl_close($curl);
         if ($http_code !== 200)
         {
-            throw new ResponseError(
+            $e = new \Exception(
                 'Unable to authenticate or refresh',
                 $http_code
             );
+            $e->_url = static::URL;
+            $e->_options = $options;
+            $e->_body  = $result;
+            $e->_result = $infos;
+            throw $e;
         }
         return $json;
     }

@@ -2,9 +2,7 @@
 
 namespace HelloAsso\V3\Resource;
 
-require_once __DIR__ . '/../Resource.php';
-
-use HelloAsso\ModelGetter;
+use HelloAsso\V3\Traits\ModelGetter;
 use HelloAsso\V3\Resource;
 
 /**
@@ -20,7 +18,6 @@ class Action extends Resource
     const RESOURCE_NAME = 'actions';
     
 	const STATUS_PROCESSED        = 'PROCESSED';
-	
 	const TYPE_DONATION           = 'DONATION';
 	const TYPE_INSCRIPTION        = 'INSCRIPTION';
 	const TYPE_SUBSCRIPTION       = 'RECURRENT_SUBSCRIPTION';

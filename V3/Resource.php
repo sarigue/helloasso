@@ -1,15 +1,8 @@
 <?php 
 namespace HelloAsso\V3;
 
-use HelloAsso\Testable;
+use HelloAsso\V3\Traits\Testable;
 
-require_once __DIR__.'/api/Query.php';
-require_once __DIR__.'/api/Response.php';
-require_once __DIR__.'/api/Pagination.php';
-require_once __DIR__.'/api/Exception.php';
-
-require_once __DIR__ . '/traits/ModelGetter.php';
-require_once __DIR__ . '/traits/Testable.php';
 
 /**
  * Classe de base des objets HelloAsso
@@ -34,9 +27,5 @@ abstract class Resource
 	}
 }
 
-require_once __DIR__ . '/resource/Action.php';
-require_once __DIR__ . '/resource/BasicCampaign.php';
-require_once __DIR__ . '/resource/Campaign.php';
-require_once __DIR__ . '/resource/Organism.php';
-require_once __DIR__ . '/resource/Payment.php';
+
 

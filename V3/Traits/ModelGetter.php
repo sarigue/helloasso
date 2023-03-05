@@ -1,8 +1,5 @@
 <?php
-namespace HelloAsso\V3;
-
-require_once __DIR__.'/../api/Query.php';
-require_once __DIR__.'/../Resource.php';
+namespace HelloAsso\V3\Traits;
 
 use HelloAsso\V3\Api\Query;
 

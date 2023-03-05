@@ -4,7 +4,8 @@ namespace HelloAsso\V5\Resource;
 
 
 use HelloAsso\V5\Resource;
-use HelloAsso\V5\Resource\Meta\Amount;
+use HelloAsso\V5\Resource\Data\Amount;
+use HelloAsso\V5\Resource\Data\Payer;
 use HelloAsso\V5\Traits\Queryable;
 use HelloAsso\V5\Traits\Response\Meta;
 

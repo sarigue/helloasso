@@ -1,9 +1,6 @@
 <?php
 namespace HelloAsso\V3\Api;
 
-require_once __DIR__.'/Pagination.php';
-require_once __DIR__.'/Exception.php';
-
 /**
  * Réponse de l'API HelloAsso
  * 

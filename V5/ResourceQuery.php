@@ -5,32 +5,35 @@ use HelloAsso\V5\Api\Authentication;
 use HelloAsso\V5\Api\Request;
 
 /**
- * Construction d'une requête d'API
+ * Build API Request
  * 
  * @author fraoult
  * @license MIT
  */
 class ResourceQuery extends Request
 {
-
-    const RESOURCE_PATH = null;
+    const RESOURCE_CLASS = null;
 
     /**
      * @var string
      */
     public static $defaultOrganisationSlug = null;
 
-
-    /**
-     * @var string
-     */
-    protected $organization_slug = null;
-
     /**
      * @var string
      */
     protected $resource_path = null;
 
+    /**
+     * @var string
+     */
+    protected $resource_class = null;
+
+
+    /**
+     * @var string
+     */
+    protected $organization_slug = null;
 
     public static function setDefaultAuth(Authentication $authentication)
     {
@@ -45,6 +48,7 @@ class ResourceQuery extends Request
     {
         $query = new static();
         $query->setResourcePath($classname::RESOURCE_NAME);
+        $query->setResourceClass($classname);
         return $query;
     }
 
@@ -52,10 +56,17 @@ class ResourceQuery extends Request
     {
         parent::__construct($authentication);
         $this->organization_slug = static::$defaultOrganisationSlug;
-        if (!empty(static::RESOURCE_PATH))
+
+        $class = static::RESOURCE_CLASS; /** @var Resource $class */
+        if (!empty($class))
         {
-            $this->setResourcePath(static::RESOURCE_PATH);
+            $this->setResourceClass($class);
         }
+        if(!empty($class) && !empty($class::RESOURCE_NAME))
+        {
+            $this->setResourcePath($class::RESOURCE_NAME);
+        }
+
     }
 
     /**
@@ -79,6 +90,16 @@ class ResourceQuery extends Request
     }
 
     /**
+     * @param string $resource_class
+     * @return $this
+     */
+    public function setResourceClass($resource_class)
+    {
+        $this->resource_class = $resource_class;
+        return $this;
+    }
+
+    /**
      * Override authorization
      *
      * @param string $auth
@@ -91,26 +112,26 @@ class ResourceQuery extends Request
     }
 
     /**
-     * @return Api\Response
-     * @throws Api\ResponseError
+     * @return \HelloAsso\V5\Api\Response
+     * @throws \HelloAsso\V5\Api\ResponseError
      */
     public function search()
     {
         $route = 'organizations/' . $this->organization_slug . '/'
             . $this->resource_path
         ;
-        return $this->execute($route);
+        return $this->execute($route)->setResourceClass($this->resource_class);
     }
 
     /**
      * @param string $id
-     * @return Api\Response
-     * @throws Api\ResponseError
+     * @return \HelloAsso\V5\Api\Response
+     * @throws \HelloAsso\V5\Api\ResponseError
      */
     public function get($id)
     {
         $route = $this->resource_path . '/' . $id;
-        return $this->execute($route);
+        return $this->execute($route)->setResourceClass($this->resource_class);
     }
 
 }

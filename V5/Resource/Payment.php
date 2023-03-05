@@ -5,6 +5,7 @@ namespace HelloAsso\V5\Resource;
 
 use HelloAsso\V5\Api\Response;
 use HelloAsso\V5\Resource;
+use HelloAsso\V5\Resource\Data\Payer;
 use HelloAsso\V5\Traits\Queryable;
 use HelloAsso\V5\Traits\Response\Meta;
 
@@ -21,23 +22,40 @@ class Payment extends Resource
     const RESOURCE_NAME = 'payments';
 
 
-    const STATE_PENDING = 'Pending';
+    const STATE_PENDING    = 'Pending';
     const STATE_AUTHORIZED = 'Authorized';
-    const STATE_REFUSED = 'Refused';
-    const STATE_UNKNOWN = 'Unknown';
+    const STATE_REFUSED    = 'Refused';
+    const STATE_UNKNOWN    = 'Unknown';
     const STATE_REGISTERED = 'Registered';
-    const STATE_PROCESEED = 'Processed';
+    const STATE_REFUNDED   = 'Refunded';
+    const STATE_REFUNDING  = 'Refunding';
+    const STATE_CONTESTED  = 'Contested';
+
+    const TYPE_OFFLINE = 'Offline';
+    const TYPE_CREDIT  = 'Credit';
+    const TYPE_DEBIT   = 'Debit';
+
+    const MEAN_NONE  = 'None';
+    const MEAN_CARD  = 'Card';
+    const MEAN_SEPA  = 'Sepa';
+    const MEAN_CHECK = 'Check';
+    const MEAN_CASH  = 'Cash';
+    const MEAN_BANK_TRANSFER = 'BankTransfer';
 
 
     /** @var string    */ public $id;
+    /** @var \DateTime */ public $cashOutDate;
     /** @var string    */ public $cashOutState;
     /** @var string    */ public $paymentReceiptUrl;
     /** @var string    */ public $fiscalReceiptUrl;
     /** @var float     */ public $amount;
+    /** @var float     */ public $amountTip;
 	/** @var \DateTime */ public $date;
     /** @var string    */ public $paymentMeans;
     /** @var int       */ public $installmentNumber;
+    /** @var string    */ public $paymentOffLineMean;
     /** @var string    */ public $state;
+    /** @var string    */ public $type;
 
     /** @var Order    */ public  $order;
     /** @var Payer    */ public  $payer;
@@ -47,7 +65,9 @@ class Payment extends Resource
 	{
         parent::__construct($json);
         $this->installmentNumber = (int)$this->installmentNumber;
-        $this->amount = $this->amount/100;
+        $this->amount = $this->amount / 100;
+        $this->amountTip = $this->amountTip / 100;
+        $this->cashOutDate = new \DateTime($this->cashOutDate);
         $this->convert($this->order, Order::class);
         $this->convert($this->payer, Payer::class);
         $this->convert($this->items, Item::class);
@@ -55,30 +75,28 @@ class Payment extends Resource
 
     public static function getAllFromForm($formType, $formSlug)
     {
-        return Resource\Query\Payment::createFromResource(static::class)
+        return Query\Payment::create()
             ->searchFromForm($formType, $formSlug)
             ->throwException()
-            ->setResourceClass(static::class)
             ->getCollection()
             ;
     }
 
     public static function getAllFromOrganization()
     {
-        return Resource\Query\Payment::createFromResource(static::class)
+        return Query\Payment::create()
             ->searchFromOrganization()
             ->throwException()
-            ->setResourceClass(static::class)
             ->getCollection()
             ;
     }
 
     /**
-     * @return Query\PaymentRefund
+     * @return \HelloAsso\V5\Resource\Query\PaymentRefund
      */
     public function refunder()
     {
-        return Resource\Query\PaymentRefund::instanciate($this);
+        return Query\PaymentRefund::instanciate($this);
     }
 
     /**

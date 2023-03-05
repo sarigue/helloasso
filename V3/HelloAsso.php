@@ -1,16 +1,7 @@
 <?php
 
 namespace HelloAsso\V3;
-require_once __DIR__ . '/traits/ModelGetter.php';
-require_once __DIR__ . '/traits/Testable.php';
 
-require_once __DIR__ . '/Resource.php';
-require_once __DIR__ . '/Callback.php';
-
-require_once __DIR__ . '/api/Query.php';
-require_once __DIR__ . '/api/Response.php';
-require_once __DIR__ . '/api/Pagination.php';
-require_once __DIR__ . '/api/Exception.php';
 
 use HelloAsso\V3\Api\Query;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace HelloAsso\V3;
+namespace HelloAsso\V3\Traits;
 
 /**
  * Méthode liées au teste :

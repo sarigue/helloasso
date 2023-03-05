@@ -2,7 +2,8 @@
 
 namespace HelloAsso\V5\Resource\Query;
 
-use \HelloAsso\V5\Resource\Payment as PaymentResource;
+use HelloAsso\V5\Resource\Payment as PaymentResource;
+
 class PaymentRefund extends Payment
 {
 
@@ -14,7 +15,7 @@ class PaymentRefund extends Payment
      */
     public static function instanciate(PaymentResource $payment)
     {
-        $instance = static::createFromResource(get_class($payment));
+        $instance = static::create();
         $instance->payment_id = $payment->id;
         return $instance;
     }

@@ -1,7 +1,7 @@
 <?php
 namespace HelloAsso\V5\Traits;
 
-use HelloAsso\V5\Api\Request;
+use HelloAsso\V5\Api\Pagination;
 use HelloAsso\V5\ResourceQuery;
 
 /**
@@ -21,16 +21,17 @@ trait Queryable
     abstract function refresh();
 
     /**
+     * @param Pagination $pagination
      * @return static[]
      * @throws \HelloAsso\V5\Api\ResponseError
      */
-    public static function getAll()
+    public static function getAll(Pagination &$pagination)
     {
         return ResourceQuery::createFromResource(static::class)
             ->search()
             ->setResourceClass(static::class)
             ->throwException()
-            ->getCollection()
+            ->getCollection($pagination)
             ;
     }
 

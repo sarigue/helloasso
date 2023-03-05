@@ -22,6 +22,10 @@ class AccessToken
      */
     const RIGHT_CHECKOUT = 'Checkout';
 
+    const ADMIN_ORGANIZATION = 'OrganizationAdmin';
+    const ADMIN_FORM         = 'FormAdmin';
+    const ADMIN_GROUP        = 'GroupAdmin';
+
 
     /**
      * Raw value
@@ -131,8 +135,17 @@ class AccessToken
      */
     public function isOrganizationAdmin()
     {
-        return $this->urs == 'OrganizationAdmin';
+        return $this->urs == static::ADMIN_ORGANIZATION;
     }
 
+    public function isFormAdmin()
+    {
+        return $this->urs == static::ADMIN_FORM;
+    }
+
+    public function isGroupAdmin()
+    {
+        return $this->urs == static::ADMIN_GROUP;
+    }
 
 }
