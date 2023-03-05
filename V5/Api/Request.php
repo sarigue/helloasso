@@ -96,12 +96,19 @@ class Request
 
     /**
      * Set query parameters array
-     * @param $params
+     * @param array $params
      * @return $this
      */
     public function setParams($params)
     {
-        $this->params = array_filter($params);
+        if (empty($params))
+        {
+            $this->params = [];
+        }
+        else
+        {
+            $this->params = array_filter($params);
+        }
         return $this;
     }
 

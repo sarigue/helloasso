@@ -6,7 +6,6 @@ namespace HelloAsso\V5\Resource\Data;
 use DateTime;
 use Exception;
 use HelloAsso\V5\Resource;
-use HelloAsso\V5\Traits\Response\Meta;
 
 /**
  * Paiement HelloAsso
@@ -16,7 +15,7 @@ use HelloAsso\V5\Traits\Response\Meta;
  */
 class Payer extends Resource
 {
-    use Meta;
+    use \HelloAsso\V5\Traits\Response\Meta;
 
     /** @var string    */ public $email;
     /** @var string    */ public $address;

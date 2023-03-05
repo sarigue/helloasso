@@ -62,9 +62,11 @@ class CustomField extends Resource
                 }
                 if (ctype_digit($this->answer))
                 {
-                    return new DateTime($this->answer);
+                    $date = new DateTime();
+                    $date->setTimestamp($this->answer);
+                    return $date;
                 }
-                return new DateTime(strtotime($this->answer));
+                return DateTime::createFromFormat('d/m/Y', $this->answer);
 
             case self::TYPE_NUMBER:
                 if ($this->answer == '')

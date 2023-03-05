@@ -18,9 +18,10 @@ trait Queryable
 
     /**
      * Refresh data from query result
+     * @param mixed $options
      * @return $this
      */
-    abstract function refresh();
+    abstract function refresh($options = null);
 
     /**
      * @param Pagination $pagination
@@ -59,9 +60,10 @@ trait Queryable
     /**
      * @throws ResponseError
      */
-    protected static function getResponse($id)
+    protected static function getResponse($id, $params = [])
     {
         return ResourceQuery::createFromResource(static::class)
+            ->setParams($params)
             ->get($id)
             ->throwException();
     }

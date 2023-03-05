@@ -220,10 +220,12 @@ abstract class CustomData
 
         if (ctype_digit($value))
         {
-            return new DateTime($value);
+            $date = new DateTime();
+            $date->setTimestamp($value);
+            return $date;
         }
 
-        return new DateTime(strtotime($value));
+        return new DateTime($value);
     }
 
 }

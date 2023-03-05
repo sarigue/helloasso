@@ -75,11 +75,17 @@ class Item extends Resource
      * @return $this
      * @throws ResponseError
      * @throws Exception
+     * @noinspection PhpParameterNameChangedDuringInheritanceInspection
      */
-    public function refresh()
+    public function refresh($withDetail = true)
     {
+        $params = [];
+        if ($withDetail)
+        {
+            $params['withDetails'] = 'true';
+        }
         $this->__construct(
-            static::getResponse($this->id)
+            static::getResponse($this->id, $params)
                 ->getData()
         );
         return $this;
