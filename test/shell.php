@@ -1,4 +1,5 @@
 <?php
+require_once '../autoload.php';
 require_once './config.php';
 
 function my_shell_exec($cmd, &$stdout=null, &$stderr=null) {
