@@ -23,6 +23,7 @@ trait Queryable
      */
     abstract function refresh($options = null);
 
+
     /**
      * @param Pagination $pagination
      * @return static[]
@@ -42,7 +43,7 @@ trait Queryable
     }
 
     /**
-     * @param $id
+     * @param string|int $id
      * @return static
      * @throws ResponseError
      * @throws Exception
@@ -51,7 +52,7 @@ trait Queryable
     public static function get($id)
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return static::getResponse($id)
+        return static::getResponseForId($id)
             ->setResourceClass(static::class)
             ->getResource()
             ;
@@ -60,7 +61,7 @@ trait Queryable
     /**
      * @throws ResponseError
      */
-    protected static function getResponse($id, $params = [])
+    protected static function getResponseForId($id, $params = [])
     {
         return ResourceQuery::createFromResource(static::class)
             ->setParams($params)

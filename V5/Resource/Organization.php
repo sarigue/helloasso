@@ -153,7 +153,7 @@ class Organization extends Resource
     public function refresh()
     {
         $this->__construct(
-            static::getResponse($this->organizationSlug)
+            static::getResponseForId($this->organizationSlug)
                 ->getData()
         );
         return $this;

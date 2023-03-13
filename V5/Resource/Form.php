@@ -41,8 +41,8 @@ class Form extends Resource
     /** @var Banner    */ public $banner;
     /** @var string    */ public $currency;
     /** @var string    */ public $description;
-    /** @var DateTime */ public $startDate;
-    /** @var DateTime */ public $endDate;
+    /** @var DateTime  */ public $startDate;
+    /** @var DateTime  */ public $endDate;
     /** @var string    */ public $state;
     /** @var string    */ public $title;
     /** @var string    */ public $widgetButtonUrl;
@@ -78,10 +78,10 @@ class Form extends Resource
      * @param string $type
      * @return Response
      * @throws ResponseError
-     * @see Queryable::getResponse()
+     * @see Queryable::getResponseForId()
      * @noinspection PhpParameterNameChangedDuringInheritanceInspection
      */
-    public static function getResponse($slug, $type)
+    public static function getResponseForId($slug, $type)
     {
         return Query\Form::create()
             ->get($slug, $type)
@@ -100,7 +100,7 @@ class Form extends Resource
      */
     public static function get($slug, $type)
     {
-        static::getResponse($slug, $type)
+        static::getResponseForId($slug, $type)
             ->setResourceClass(static::class)
             ->getResource();
     }
@@ -114,7 +114,7 @@ class Form extends Resource
     {
         try {
             $this->__construct(
-                static::getResponse($this->formSlug, $this->formType)
+                static::getResponseForId($this->formSlug, $this->formType)
                     ->getData()
             );
         } catch (ResponseError $e) {

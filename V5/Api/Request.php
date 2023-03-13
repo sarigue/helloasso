@@ -166,7 +166,7 @@ class Request
 	 * Build URL
 	 * @return string
 	 */
-	public function build($route)
+	protected function build($route)
 	{
 		$url = static::API_URL . $route;
 
@@ -184,7 +184,7 @@ class Request
 	 * @return Response
      * @throws ResponseError
      */
-	public function execute($route)
+	protected function execute($route)
 	{
         if (!$this->authentication)
         {
@@ -195,17 +195,18 @@ class Request
             $this->authentication->refresh();
         }
 
+        $headers = [
+            'Authorization: ' . $this->authentication->getAuthHeader()
+        ];
         $options = [
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_HTTPHEADER     =>  [
-                'Content-Type: application/x-www-form-urlencoded',
-                'Authorization: ' . $this->authentication->getAuthHeader()
-            ]
+            CURLOPT_RETURNTRANSFER => 1
         ];
         if (!empty($this->post_data))
         {
+            $headers[] = 'Content-Type: application/x-www-form-urlencoded';
             $options[CURLOPT_POSTFIELDS] = http_build_query($this->post_data);
         }
+        $options[CURLOPT_HTTPHEADER] = $headers;
 
         $url = $this->build($route);
         $curl = curl_init($url);

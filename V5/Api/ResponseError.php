@@ -34,7 +34,7 @@ class ResponseError extends Exception
         Exception $previous = null
     )
     {
-        $this->body    = $body;
+        $this->body  = $body;
         $this->request = $request;
 
         $curl = $request->getCurlData()['result'];

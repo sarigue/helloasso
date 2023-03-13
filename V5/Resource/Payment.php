@@ -145,7 +145,7 @@ class Payment extends Resource
     public function refresh()
     {
         $this->__construct(
-            static::getResponse($this->id)
+            static::getResponseForId($this->id)
             ->getData()
         );
         return $this;

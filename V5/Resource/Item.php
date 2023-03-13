@@ -85,7 +85,7 @@ class Item extends Resource
             $params['withDetails'] = 'true';
         }
         $this->__construct(
-            static::getResponse($this->id, $params)
+            static::getResponseForId($this->id, $params)
                 ->getData()
         );
         return $this;

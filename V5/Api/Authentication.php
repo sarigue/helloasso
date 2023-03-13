@@ -148,6 +148,7 @@ class Authentication
         {
             throw new ResponseError('No client Secret');
         }
+
         $data = [
             'client_id'     => $this->client_id,
             'client_secret' => $this->client_secret,
@@ -213,37 +214,30 @@ class Authentication
      */
     protected function exec(array $data)
     {
-        $curl = curl_init(static::URL);
-
         $headers = [
             'Content-Type: application/x-www-form-urlencoded',
         ];
         $options = [
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_SSL_VERIFYPEER => 1,
-            CURLOPT_SSL_VERIFYHOST => 0,
             CURLOPT_HTTPHEADER => $headers,
-            CURLOPT_POSTFIELDS => http_build_query($data)
+            CURLOPT_POSTFIELDS => http_build_query($data),
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSLVERSION => 7 // Force requests to use TLS 1.2
         ];
+
+        $curl = curl_init(static::URL);
         curl_setopt_array($curl, $options);
-        $result    = curl_exec($curl);
-        $json      = json_decode($result, true);
+        $body      = curl_exec($curl);
         $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $infos     = curl_getinfo($curl);
         curl_close($curl);
+
         if ($http_code !== 200)
         {
-            $e = new Exception(
-                'Unable to authenticate or refresh',
-                $http_code
-            );
-            $e->_url = static::URL;
-            $e->_options = $options;
-            $e->_body  = $result;
-            $e->_result = $infos;
-            throw $e;
+            throw new AuthError($body, $options, $infos);
         }
-        return $json;
+
+        return json_decode($body, true);
     }
 
 }
