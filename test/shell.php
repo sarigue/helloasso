@@ -67,25 +67,94 @@ function execute($command, $show_stderr = true)
             color: #f9f8f9;
             padding: 0.5em;
         }
+        h1 > input
+        {
+            visibility: hidden;
+            display: none;
+        }
+        h1 > label
+        {
+            cursor: pointer;
+        }
+        h1:has(input:checked) + div
+        {
+            display: none;
+        }
+        h1:has(input:checked) > label::before
+        {
+            content: "▾\00a0";
+        }
+        h1:has(input:not(:checked)) > label::before
+        {
+            content: "▴\00a0";
+        }
     </style>
 </head>
 <body>
-<h1>IP serveur</h1>
-<?php  execute('curl https://api.ipify.org', false); ?>
-<hr>
-<h1>Script de test</h1>
-<?php execute(PHP_PATH . ' ./v5.php'); ?>
-<hr>
-<h1>Test cURL d'appel authentification</h1>
-<?php execute('curl -v https://api.helloasso.com/oauth2/token'); ?>
-<hr>
-<h1>Code source</h1>
-<pre class="source_code">
-<?php highlight_file('../V5/Api/Authentication.php'); ?>
-</pre>
-<hr>
-<h1>PHP Info</h1>
-<?php phpinfo() ?>
+<h1>
+    <input type="checkbox" id="ip"/>
+    <label for="ip">IP serveur</label>
+</h1>
+<div>
+    <?php execute('curl https://api.ipify.org', false); ?>
+    <hr>
+</div>
+<h1>
+    <input type="checkbox" id="auth-test"/>
+    <label for="auth-test">Test cURL d'appel authentification</label>
+</h1>
+<div>
+    <?php execute('uname -a'); ?>
+    <?php execute('curl --version'); ?>
+    <?php execute('curl -v'
+        .' https://api.helloasso.com/oauth2/token'
+    ); ?>
+    <hr>
+</div>
+<h1>
+    <input type="checkbox" id="test-script"/>
+    <label for="test-script">Script de test</label>
+</h1>
+<div>
+    <?php execute(PHP_PATH . ' ./v5.php'); ?>
+    <hr>
+</div>
+<h1>
+    <input type="checkbox" id="code-source"/>
+    <label for="code-source">Code source</label>
+</h1>
+<div>
+    <h2>../V5/Api/Authentication.php</h2>
+    <pre class="source_code">
+        <?php highlight_file('../V5/Api/Authentication.php'); ?>
+    </pre>
+    <h2>./v5.php</h2>
+    <pre class="source_code">
+        <?php highlight_file('./v5.php'); ?>
+    </pre>
+    <hr>
+</div>
+<h1>
+    <input type="checkbox" id="php-info"/>
+    <label for="php-info">PHP Info</label>
+</h1>
+<div>
+    <?php
+    @ob_start();
+    phpinfo();
+    $phpinfo = @ob_get_clean();
+    $phpinfo = preg_replace('/<!DOCTYPE[^>]+>/i', '', $phpinfo);
+    $phpinfo = preg_replace('/<\/?html[^>]*>/', '', $phpinfo);
+    $phpinfo = preg_replace('/<\/?head[^>]*>/', '', $phpinfo);
+    $phpinfo = preg_replace('/<\/?meta[^>]*>/', '', $phpinfo);
+    $phpinfo = preg_replace('/<title>.+?<\/title>/', '', $phpinfo);
+    $phpinfo = preg_replace('/<\/?body[^>]*>/', '', $phpinfo);
+    $phpinfo = preg_replace('/<(\/?)h4/', '<$1h5', $phpinfo);
+    $phpinfo = preg_replace('/<(\/?)h3/', '<$1h4', $phpinfo);
+    $phpinfo = preg_replace('/<(\/?)h2/', '<$1h3', $phpinfo);
+    echo $phpinfo;
+    ?>
+</div>
 </body>
 </html>
 
