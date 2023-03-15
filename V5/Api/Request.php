@@ -195,6 +195,8 @@ class Request
             $this->authentication->refresh();
         }
 
+        QueryManager::wait_for_query();
+
         $headers = [
             'Authorization: ' . $this->authentication->getAuthHeader()
         ];

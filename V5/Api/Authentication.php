@@ -214,6 +214,8 @@ class Authentication
      */
     protected function exec(array $data)
     {
+        QueryManager::wait_for_query();
+
         $headers = [
             'Content-Type: application/x-www-form-urlencoded',
         ];
@@ -222,7 +224,7 @@ class Authentication
             CURLOPT_HTTPHEADER => $headers,
             CURLOPT_POSTFIELDS => http_build_query($data),
             CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_SSLVERSION => 7 // Force requests to use TLS 1.2
+            CURLOPT_SSLVERSION => 7 // Force requests to use TLS 1.3,
         ];
 
         $curl = curl_init(static::URL);
