@@ -34,14 +34,31 @@ class Callback
         return new static();
     }
 
-	public function __construct()
+	public function __construct($data = null)
 	{
-		$this->request = $_POST;
-        if (empty($_POST))
+        if (!empty($data))
+        {
+            if (is_string($data))
+            {
+                $this->request = json_decode($data, true);
+            }
+            else
+            {
+                $this->request = (array)$data;
+            }
+        }
+
+        if (empty($this->request))
+        {
+            $this->request = $_POST;
+        }
+
+        if (empty($this->request))
         {
             $request = file_get_contents('php://input');
-            $this->request = json_decode($request, true);
+            $this->request = $request ? json_decode($request, true) : [];
         }
+
         $this->eventType = $this->getParam('eventType');
         $this->data = $this->getParam('data');
 	}
