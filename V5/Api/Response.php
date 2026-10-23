@@ -43,7 +43,7 @@ class Response
 
         $json = json_decode($body, false);
         if (
-            property_exists($json, 'resources')
+            is_object($json) && property_exists($json, 'resources')
             && is_array($json->resources)
         )
         {
@@ -51,7 +51,7 @@ class Response
             $this->is_collection = true;
         }
         elseif (
-            property_exists($json, 'data')
+            is_object($json) && property_exists($json, 'data')
             && is_array($json->data)
         )
         {
@@ -64,7 +64,7 @@ class Response
             $this->is_collection = false;
         }
 
-        if (property_exists($json, 'pagination'))
+        if (is_object($json) && property_exists($json, 'pagination'))
         {
             $this->pagination = new Pagination($json->pagination);
         }
@@ -158,7 +158,7 @@ class Response
     public function getResource()
     {
 
-        if ($this->is_collection)
+        if ($this->is_collection || $this->data === null)
         {
             return null;
         }
