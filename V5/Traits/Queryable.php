@@ -18,10 +18,9 @@ trait Queryable
 
     /**
      * Refresh data from query result
-     * @param mixed $options
      * @return $this
      */
-    abstract function refresh($options = null);
+    abstract function refresh();
 
 
     /**
